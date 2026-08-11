@@ -1,8 +1,26 @@
 /* Audience */
 .audience-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  --grid-cols: 1;
+  --grid-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--grid-gap);
+  width: 100%;
+}
+
+.audience-grid > .audience-card {
+  width: calc((100% - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
+  min-width: 0;
+  box-sizing: border-box;
+  align-self: stretch;
+}
+
+@media (min-width: 768px) {
+  .audience-grid {
+    --grid-cols: 2;
+  }
 }
 
 .audience-card {
@@ -12,7 +30,6 @@
   grid-template-columns: auto 1fr;
   gap: 0.95rem;
   align-items: start;
-  width: 100%;
   padding: 1.3rem 1.35rem 1.3rem 1.45rem;
   text-align: left;
   font: inherit;
@@ -196,10 +213,6 @@
 }
 
 @media (max-width: 767.98px) {
-  .audience-grid {
-    grid-template-columns: 1fr;
-  }
-
   .audience-cta__inner {
     flex-direction: column;
     align-items: stretch;

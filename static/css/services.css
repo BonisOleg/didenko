@@ -9,9 +9,32 @@
 }
 
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 1.15rem;
+  --grid-cols: 1;
+  --grid-gap: 1.15rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--grid-gap);
+  width: 100%;
+}
+
+.services-grid > .service-card {
+  width: calc((100% - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .services-grid {
+    --grid-cols: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-grid {
+    --grid-cols: 3;
+  }
 }
 
 .service-card {
@@ -19,7 +42,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
   padding: 1.55rem 1.4rem 1.35rem;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.78);

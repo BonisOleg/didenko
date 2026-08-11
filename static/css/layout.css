@@ -1,3 +1,13 @@
+/* Anchor offset under sticky header — scroll_margin_anchor_skill */
+#lead-form,
+#about-metrics,
+#audience,
+#services,
+#advantages,
+#blog {
+  scroll-margin-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+}
+
 /* Header */
 .site-header {
   position: sticky;

@@ -4,11 +4,6 @@
   overflow-x: clip;
 }
 
-.about-page #about-metrics,
-.about-page #lead-form {
-  scroll-margin-top: var(--header-h);
-}
-
 .about-hero {
   position: relative;
   padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(2rem, 4vw, 3rem);
@@ -259,13 +254,34 @@
 }
 
 .about-principles__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  --grid-cols: 1;
+  --grid-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--grid-gap);
+  width: 100%;
   margin-top: 1.25rem;
 }
 
+.about-principles__grid > .about-principle {
+  width: calc((100% - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 992px) {
+  .about-principles__grid {
+    --grid-cols: 3;
+  }
+}
+
 .about-principle {
+  display: flex;
+  flex-direction: column;
   padding: 1.25rem 1.2rem;
   background: var(--color-card-bg);
   border: 1px solid rgba(140, 156, 163, 0.35);
@@ -299,13 +315,31 @@
   font-size: 0.95rem;
   color: var(--color-muted-text);
   line-height: 1.55;
+  flex: 1 1 auto;
 }
 
 .about-certs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  --grid-cols: 1;
+  --grid-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--grid-gap);
+  width: 100%;
   margin-top: 1.15rem;
+}
+
+.about-certs > .about-cert {
+  width: calc((100% - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .about-certs {
+    --grid-cols: 2;
+  }
 }
 
 .about-cert {
@@ -329,6 +363,13 @@
   color: var(--color-accent-red);
 }
 
+.about-cert > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .about-cert h3 {
   margin: 0 0 0.3rem;
   font-size: 1.05rem;
@@ -340,6 +381,7 @@
   font-size: 0.92rem;
   color: var(--color-muted-text);
   line-height: 1.5;
+  flex: 1 1 auto;
 }
 
 /* Reveal — reuse data-reveal from main.js */
@@ -402,10 +444,6 @@
     max-width: none;
   }
 
-  .about-principles__grid {
-    grid-template-columns: 1fr;
-  }
-
   .about-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
@@ -457,10 +495,6 @@
 
   .about-stat__label {
     max-width: none;
-  }
-
-  .about-certs {
-    grid-template-columns: 1fr;
   }
 
   .about-hero__actions {

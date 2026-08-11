@@ -80,9 +80,32 @@
 }
 
 .services-catalog {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
-  gap: 1.2rem;
+  --grid-cols: 1;
+  --grid-gap: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--grid-gap);
+  width: 100%;
+}
+
+.services-catalog > .service-card {
+  width: calc((100% - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .services-catalog {
+    --grid-cols: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-catalog {
+    --grid-cols: 3;
+  }
 }
 
 .service-card--catalog {
@@ -90,7 +113,7 @@
 }
 
 .services-catalog__empty {
-  grid-column: 1 / -1;
+  width: 100%;
   margin: 0;
   color: var(--color-muted-text);
 }
@@ -100,16 +123,43 @@
 }
 
 .process-roadmap {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  --grid-cols: 1;
+  --grid-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--grid-gap);
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.process-roadmap > .process-step {
+  width: calc((100% - (var(--grid-cols) - 1) * var(--grid-gap)) / var(--grid-cols));
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .process-roadmap {
+    --grid-cols: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .process-roadmap {
+    --grid-cols: 4;
+  }
+}
+
 .process-step {
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 1.35rem 1.2rem 1.25rem;
   background: var(--color-bg-light);
   border: 1px solid var(--color-card-border);
@@ -147,6 +197,7 @@
   color: var(--color-muted-text);
   font-size: 0.95rem;
   line-height: 1.5;
+  flex: 1 1 auto;
 }
 
 .services-cta {
@@ -289,10 +340,6 @@
 }
 
 @media (max-width: 991.98px) {
-  .process-roadmap {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .services-cta,
   .service-detail__grid {
     grid-template-columns: 1fr;
@@ -304,14 +351,6 @@
 }
 
 @media (max-width: 767.98px) {
-  .services-catalog {
-    grid-template-columns: 1fr;
-  }
-
-  .process-roadmap {
-    grid-template-columns: 1fr;
-  }
-
   .services-hero {
     padding-bottom: 2rem;
   }
