@@ -1,0 +1,20 @@
+{% load site_content %}
+{% if oob %}
+<div id="blog-load-more" class="load-more-wrap" hx-swap-oob="true">
+{% else %}
+<div id="blog-load-more" class="load-more-wrap">
+{% endif %}
+  {% if page_obj.has_next %}
+  <button
+    type="button"
+    class="btn-load-more"
+    hx-get="{% url 'blog:api_more' %}?page={{ page_obj.next_page_number }}&category={{ api_category }}"
+    hx-target="#blog-posts-container"
+    hx-swap="beforeend"
+    hx-indicator="this"
+  >
+    <span class="btn-load-more__label">{% block_plain 'blog' 'load_more' %}</span>
+    <span class="btn-load-more__spinner" aria-hidden="true"></span>
+  </button>
+  {% endif %}
+</div>

@@ -1,0 +1,391 @@
+/* Site Footer — dark slate, BEM */
+
+.site-footer {
+  --footer-text: var(--color-footer-text-bright, #ffffff);
+  --footer-text-soft: var(--color-footer-text-muted, #e8eef2);
+  --color-pill-bg: var(--color-footer-pill-bg);
+  --color-pill-border: var(--color-footer-pill-border);
+  --color-pill-hover: var(--color-footer-pill-hover);
+
+  background: var(--color-footer-bg);
+  color: var(--footer-text-soft);
+  padding: clamp(2.75rem, 5vw, 3.9rem) 0 1.35rem;
+  margin-top: 0;
+}
+
+.site-footer a,
+.site-footer a:visited {
+  color: var(--footer-text);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--footer-text);
+}
+
+.site-footer__inner {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.5fr);
+  align-items: start;
+  padding-bottom: 1.85rem;
+  border-bottom: 1px solid var(--color-footer-border);
+}
+
+/* Brand */
+.site-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  color: var(--footer-text);
+  text-decoration: none;
+}
+
+.site-footer__logo:hover,
+.site-footer__logo:focus-visible {
+  color: var(--footer-text);
+  transform: none;
+}
+
+.site-footer__logo-mark {
+  display: block;
+  width: auto;
+  height: 2.45rem;
+  max-width: 3.15rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.site-footer__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.15;
+}
+
+.site-footer__logo-text strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+  font-weight: 700;
+  color: var(--footer-text);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.site-footer__logo-text span {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--footer-text-soft);
+  font-weight: 600;
+}
+
+.site-footer__brand > p {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--footer-text-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Column titles */
+.site-footer__heading {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--footer-text-soft);
+}
+
+
+/* Navigation */
+.site-footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.site-footer__nav > a,
+.site-footer__nav > a:visited {
+  position: relative;
+  width: fit-content;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--footer-text);
+  padding-bottom: 0.12rem;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.site-footer__nav > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-accent-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease-in-out;
+}
+
+.site-footer__nav > a:hover,
+.site-footer__nav > a:focus-visible {
+  color: var(--footer-text);
+  transform: translateX(4px);
+}
+
+.site-footer__nav > a:hover::after,
+.site-footer__nav > a:focus-visible::after,
+.site-footer__nav > a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.site-footer__nav > a[aria-current="page"] {
+  color: var(--footer-text);
+}
+
+/* Contacts */
+.site-footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.site-footer__contact,
+.site-footer__contact:visited,
+.site-footer__meta {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0;
+  color: var(--footer-text);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.site-footer__contact:hover,
+.site-footer__contact:focus-visible {
+  color: var(--footer-text);
+}
+
+.site-footer__contact svg,
+.site-footer__meta svg {
+  flex-shrink: 0;
+  margin-top: 0.18rem;
+  color: var(--footer-text);
+  transition: color 0.2s ease-in-out;
+}
+
+.site-footer__contact:hover svg,
+.site-footer__contact:focus-visible svg {
+  color: var(--footer-text);
+}
+
+/* Messengers */
+.site-footer__social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  grid-column: 3;
+  min-width: 0;
+}
+
+.site-footer__messengers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.site-footer__messenger,
+.site-footer__messenger:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.85rem;
+  min-height: 40px;
+  border: 1px solid var(--color-pill-border);
+  border-radius: 0.5rem;
+  background: var(--color-pill-bg);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--footer-text);
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.site-footer__messenger-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--footer-text-soft);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06);
+}
+
+.site-footer__messenger--telegram .site-footer__messenger-icon {
+  background: var(--color-dot-telegram);
+}
+
+.site-footer__messenger--whatsapp .site-footer__messenger-icon {
+  background: var(--color-dot-whatsapp);
+}
+
+.site-footer__messenger--viber .site-footer__messenger-icon {
+  background: var(--color-dot-viber);
+}
+
+.site-footer__messenger:hover,
+.site-footer__messenger:focus-visible {
+  background: var(--color-pill-hover);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: var(--footer-text);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.site-footer__cred {
+  margin: 0.7rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--footer-text-soft);
+  max-width: 42ch;
+}
+
+/* Bottom bar */
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.site-footer__copy {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--footer-text-soft);
+}
+
+.site-footer__credit,
+.site-footer__credit:visited {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--footer-text-soft);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.site-footer__credit:hover,
+.site-footer__credit:focus-visible {
+  color: var(--footer-text);
+}
+
+/* Tablet + mobile: brand / nav|contacts / messengers full-width */
+@media (max-width: 991.98px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem 1.5rem;
+  }
+
+  .site-footer__brand,
+  .site-footer__social {
+    grid-column: 1 / -1;
+  }
+
+  .site-footer__brand > p {
+    max-width: 48ch;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .site-footer {
+    padding-top: 2.5rem;
+  }
+
+  .site-footer__inner {
+    gap: 1.5rem 1rem;
+  }
+
+  .site-footer__logo {
+    gap: 0;
+  }
+
+  .site-footer__logo-mark {
+    height: 2.2rem;
+    max-width: 2.85rem;
+  }
+
+  .site-footer__logo-text {
+    display: none;
+  }
+
+  .site-footer__brand > p {
+    max-width: none;
+  }
+
+  .site-footer__nav > a,
+  .site-footer__contact,
+  .site-footer__meta {
+    font-size: 0.9rem;
+  }
+
+  .site-footer__nav > a:hover,
+  .site-footer__nav > a:focus-visible {
+    transform: translateX(3px);
+  }
+
+  .site-footer__contact,
+  .site-footer__meta {
+    word-break: break-word;
+  }
+
+  .site-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Дуже вузькі — одна колонка */
+@media (max-width: 359.98px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .site-footer__brand,
+  .site-footer__nav,
+  .site-footer__contacts,
+  .site-footer__social {
+    grid-column: auto;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .site-footer a,
+  .site-footer__nav > a,
+  .site-footer__nav > a::after,
+  .site-footer__messenger,
+  .site-footer__credit {
+    transition: none;
+  }
+
+  .site-footer__nav > a:hover,
+  .site-footer__nav > a:focus-visible,
+  .site-footer__messenger:hover,
+  .site-footer__messenger:focus-visible {
+    transform: none;
+  }
+}

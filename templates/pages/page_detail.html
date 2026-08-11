@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+  <div class="container prose">
+    <h1>{{ seo_h1 }}</h1>
+    {{ page.body|safe }}
+  </div>
+</section>
+{% endblock %}

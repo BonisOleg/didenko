@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static site_content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog-page.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="blog-page">
+  <section class="blog-hero">
+    <div class="container blog-hero__inner">
+      <span class="blog-hero__badge">{% block_plain 'blog' 'hero_badge' %}</span>
+      <h1 class="blog-hero__title">{{ seo_h1 }}</h1>
+      <p class="blog-hero__subtext">
+        {% if seo_description %}{{ seo_description }}{% else %}{% block_plain 'blog' 'hero_sub' %}{% endif %}
+      </p>
+
+      <div
+        class="filter-pills"
+        role="tablist"
+        aria-label="Фільтр матеріалів блогу"
+        hx-target="#blog-posts-container"
+        hx-swap="innerHTML transition:true"
+      >
+        {% for key, label in filter_pills %}
+        <button
+          type="button"
+          class="pill{% if api_category == key %} is-active{% endif %}"
+          role="tab"
+          aria-selected="{% if api_category == key %}true{% else %}false{% endif %}"
+          data-blog-pill
+          hx-get="{% if key == 'all' %}{% url 'blog:api_all' %}{% elif key == 'cases' %}{% url 'blog:api_cases' %}{% elif key == 'news' %}{% url 'blog:api_news' %}{% else %}{% url 'blog:api_tips' %}{% endif %}"
+          hx-target="#blog-posts-container"
+          hx-swap="innerHTML transition:true"
+        >{{ label }}</button>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-feed section">
+    <div class="container">
+      <div id="blog-posts-container" class="blog-grid">
+        {% include "blog/partials/feed.html" %}
+      </div>
+      {% include "blog/partials/load_more.html" %}
+    </div>
+  </section>
+</section>
+{% endblock %}

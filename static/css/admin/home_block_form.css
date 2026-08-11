@@ -1,0 +1,6 @@
+/* Поля HomeBlock залежно від типу блоку */
+.home-block-type-hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-base-400, #9ca3af);
+}

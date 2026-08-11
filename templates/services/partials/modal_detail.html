@@ -1,0 +1,48 @@
+{% load site_content %}
+<div class="service-modal__body">
+  <p class="service-modal__eyebrow">{% block_plain 'services' 'modal_eyebrow' %}</p>
+  <h3 id="service-modal-title" class="service-modal__title">{{ service.title }}</h3>
+  {% if service.short_description %}
+    <p class="service-modal__lead">{{ service.short_description }}</p>
+  {% endif %}
+
+  {% if service.deliverables %}
+    <div class="service-modal__block">
+      <h4 class="service-modal__block-title">{% block_plain 'services' 'modal_deliverables_title' %}</h4>
+      <ul class="service-modal__list">
+        {% for item in service.deliverables %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if service.expected_result %}
+    <div class="service-modal__block">
+      <h4 class="service-modal__block-title">{% block_plain 'services' 'modal_result_title' %}</h4>
+      <p class="service-modal__result">{{ service.expected_result }}</p>
+    </div>
+  {% endif %}
+
+  {% if service.timeline %}
+    <div class="service-modal__meta">
+      <span class="service-modal__meta-label">{% block_plain 'services' 'modal_timeline_label' %}</span>
+      <span class="service-modal__meta-value">{{ service.timeline }}</span>
+    </div>
+  {% endif %}
+
+  {% if service.body %}
+    <div class="service-modal__prose prose">
+      {{ service.body|safe }}
+    </div>
+  {% endif %}
+
+  <div class="service-modal__actions">
+    <a
+      class="btn btn-primary btn-primary-red"
+      href="{{ service.get_absolute_url }}#lead-form"
+      data-modal-close
+    >{% block_plain 'services' 'modal_cta' %}</a>
+    <a class="btn btn-ghost" href="{{ service.get_absolute_url }}">{% block_plain 'services' 'modal_full_page' %}</a>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+{% load blog_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="case-detail">
+  <header class="case-header">
+    <div class="container case-layout-grid case-header__grid">
+      <div class="case-header__copy">
+        <div class="top-nav-bar">
+          <a href="{% url 'blog:list' %}" class="back-link">
+            <span class="back-link__arrow" aria-hidden="true">←</span>
+            До всіх матеріалів
+          </a>
+          <span class="badge badge--case{% if post.category.slug == 'novyny' %} badge--news{% elif post.category.slug == 'porady' %} badge--tips{% elif post.is_featured %} badge--featured{% endif %}">
+            {{ post|blog_badge }}
+          </span>
+        </div>
+
+        <h1 class="case-title">{{ seo_h1 }}</h1>
+
+        <div class="case-meta">
+          {% if post.published_label %}
+            <span><time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_label }}</time></span>
+            <span class="dot" aria-hidden="true">•</span>
+          {% endif %}
+          <span>{{ post.read_time_minutes }} хв читання</span>
+          <span class="dot" aria-hidden="true">•</span>
+          <span class="author">
+            {{ site_settings.blog_author_name|default:"Діденко Валерія Валеріївна" }}
+          </span>
+        </div>
+
+        {% if post.excerpt %}
+          <p class="case-lead">{{ post.excerpt }}</p>
+        {% endif %}
+      </div>
+
+      <figure class="case-header__visual">
+        {% if post.cover_image %}
+          <img
+            src="{{ post.cover_image.url }}"
+            alt="{{ post.cover_alt|default:post.title }}"
+            loading="eager"
+            width="960"
+            height="540"
+            decoding="async"
+          >
+        {% else %}
+          <div class="case-header__placeholder" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M7 3.5h7.2L19 8.3V20a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M14 3.5V8h4.8M8.5 12.5h7M8.5 16h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        {% endif %}
+      </figure>
+    </div>
+  </header>
+
+  <div class="case-body section">
+    <div class="container case-layout-grid">
+      <main class="case-content-card prose">
+        {{ post.body|safe }}
+      </main>
+
+      <aside class="case-sidebar">
+        <div class="sidebar-card share-card">
+          <span class="sidebar-title">Поділитися</span>
+          <div class="share-buttons">
+            <a
+              class="share-pill"
+              href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}"
+              rel="noopener noreferrer"
+              target="_blank"
+            >Facebook</a>
+            <a
+              class="share-pill"
+              href="https://t.me/share/url?url={{ share_url|urlencode }}&text={{ post.title|urlencode }}"
+              rel="noopener noreferrer"
+              target="_blank"
+            >Telegram</a>
+            <a
+              class="share-pill"
+              href="mailto:?subject={{ post.title|urlencode }}&body={{ share_url|urlencode }}"
+            >Email</a>
+          </div>
+        </div>
+
+        <div class="sidebar-card cta-card">
+          <span class="sidebar-title">
+            {{ site_settings.blog_cta_title|default:"Потрібна консультація?" }}
+          </span>
+          <p class="cta-desc">
+            {{ site_settings.blog_cta_text|default:"Оціню вашу ситуацію та запропоную оптимальний правовий шлях у межах Кодексу України з процедур банкрутства." }}
+          </p>
+          <button
+            type="button"
+            class="btn-cta-primary btn-primary-red"
+            data-lead-open
+          >
+            <span class="btn-cta-primary__label">
+              {{ site_settings.blog_cta_button|default:"Залишити заявку" }}
+            </span>
+            <span class="btn-cta-primary__ripple" aria-hidden="true"></span>
+          </button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</article>
+{% endblock %}

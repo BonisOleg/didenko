@@ -1,0 +1,80 @@
+{% load static site_content %}
+{% section_visible 'site' 'nav_home_visible' as show_nav_home %}
+{% section_visible 'site' 'nav_about_visible' as show_nav_about %}
+{% section_visible 'site' 'nav_services_visible' as show_nav_services %}
+{% section_visible 'site' 'nav_blog_visible' as show_nav_blog %}
+{% section_visible 'site' 'nav_contacts_visible' as show_nav_contacts %}
+{% section_visible 'site' 'nav_cta_visible' as show_nav_cta %}
+{% section_visible 'site' 'nav_phone_visible' as show_nav_phone %}
+{% block_image_url 'site' 'logo_header' 'img/brand/logo-mark.png' as logo_header_url %}
+{% block_plain 'site' 'nav_home_href' as nav_home_href %}
+{% block_plain 'site' 'nav_about_href' as nav_about_href %}
+{% block_plain 'site' 'nav_services_href' as nav_services_href %}
+{% block_plain 'site' 'nav_blog_href' as nav_blog_href %}
+{% block_plain 'site' 'nav_contacts_href' as nav_contacts_href %}
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a
+      class="site-logo"
+      href="{{ nav_home_href }}"
+      aria-label="{% block_plain 'site' 'brand_name' %} — {% block_plain 'site' 'brand_title' %}"
+    >
+      <img
+        class="site-logo__mark"
+        src="{{ logo_header_url }}"
+        alt=""
+        width="138"
+        height="111"
+        decoding="async"
+      >
+      <span class="site-logo__text">
+        <span class="site-logo__name">{% block_plain 'site' 'brand_name' %}</span>
+        <span class="site-logo__title">{% block_plain 'site' 'brand_title' %}</span>
+      </span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      data-nav-toggle
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="{% block_plain 'site' 'nav_open_aria' %}"
+    >
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__label">{% block_plain 'site' 'nav_toggle_label' %}</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" data-nav aria-label="{% block_plain 'site' 'nav_aria' %}">
+      {% if show_nav_home %}
+        <a href="{{ nav_home_href }}"{% nav_aria_current nav_home_href %}>{% block_plain 'site' 'nav_home_label' %}</a>
+      {% endif %}
+      {% if show_nav_about %}
+        <a href="{{ nav_about_href }}"{% nav_aria_current nav_about_href %}>{% block_plain 'site' 'nav_about_label' %}</a>
+      {% endif %}
+      {% if show_nav_services %}
+        <a href="{{ nav_services_href }}"{% nav_aria_current nav_services_href %}>{% block_plain 'site' 'nav_services_label' %}</a>
+      {% endif %}
+      {% if show_nav_blog %}
+        <a href="{{ nav_blog_href }}"{% nav_aria_current nav_blog_href %}>{% block_plain 'site' 'nav_blog_label' %}</a>
+      {% endif %}
+      {% if show_nav_contacts %}
+        <a href="{{ nav_contacts_href }}"{% nav_aria_current nav_contacts_href %}>{% block_plain 'site' 'nav_contacts_label' %}</a>
+      {% endif %}
+
+      <div class="site-nav__actions">
+        {% if show_nav_phone and site_settings.phone %}
+          <a class="btn btn-ghost btn-sm site-nav__phone" href="tel:{{ site_settings.phone }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6.6 10.8c1.6 3.1 3.5 5 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ site_settings.phone }}</span>
+          </a>
+        {% endif %}
+        {% if show_nav_cta %}
+          <a class="btn btn-primary btn-primary-red btn-sm" href="{% block_plain 'site' 'nav_cta_href' %}">{% block_plain 'site' 'nav_cta_label' %}</a>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+</header>

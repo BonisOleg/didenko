@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+{% load site_content %}
+
+{% block content %}
+{% section_visible 'home' 'hero_section_visible' as show_hero %}
+{% if show_hero %}
+{% block_image_url 'home' 'hero_image' 'img/hero/hero-banner.webp' as hero_img %}
+{% section_visible 'home' 'hero_shade_visible' as show_hero_shade %}
+<section class="hero{% if not show_hero_shade %} hero--no-shade{% endif %}" aria-label="Головний банер">
+  <div class="hero__media" aria-hidden="true">
+    {% if hero_img %}
+      <img src="{{ hero_img }}" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
+    {% elif hero and hero.image %}
+      <img src="{{ hero.image.url }}" alt="" width="1920" height="823" fetchpriority="high" decoding="async">
+    {% else %}
+      <div class="hero__placeholder"></div>
+    {% endif %}
+    {% if show_hero_shade %}
+      <div class="hero__shade"></div>
+    {% endif %}
+    <div class="hero__pattern"></div>
+  </div>
+
+  <div class="container hero__content" data-reveal>
+    <p class="hero__brand">{% block_plain 'home' 'hero_brand' %}</p>
+    <h1>{% if seo_h1 %}{{ seo_h1 }}{% else %}{% block_plain 'home' 'hero_title' %}{% endif %}</h1>
+    <p class="hero__sub">{% block_plain 'home' 'hero_sub' %}</p>
+    <div class="hero__actions">
+      <a class="btn btn-primary btn-primary-red btn-lg" href="{% block_plain 'home' 'hero_cta_href' %}">{% block_plain 'home' 'hero_cta_label' %}</a>
+      <a class="btn btn-outline-light btn-lg" href="{% block_plain 'home' 'hero_secondary_href' %}">{% block_plain 'home' 'hero_secondary_label' %}</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% for rb in home_blocks %}
+  {% if rb.block.block_type == 'audience' %}
+    {% section_visible 'home' 'audience_section_visible' as show_audience %}
+    {% if show_audience %}
+    <section class="section section--audience" id="audience" aria-labelledby="audience-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="section__eyebrow section__eyebrow--badge">{% block_plain 'home' 'audience_eyebrow' %}</p>
+          <h2 id="audience-title">{% block_plain 'home' 'audience_title' %}</h2>
+          <p class="section__lead">{% block_plain 'home' 'audience_intro' %}</p>
+        </header>
+
+        <div
+          class="audience-grid"
+          data-audience-checklist
+          role="group"
+          aria-label="Оберіть ситуації, які стосуються вас"
+        >
+          {% for item in rb.items %}
+          <button
+            type="button"
+            class="audience-card"
+            data-audience-item
+            data-audience-text="{{ item }}"
+            data-reveal
+            data-reveal-delay="{{ forloop.counter0 }}"
+            aria-pressed="false"
+          >
+            <span class="audience-card__accent" aria-hidden="true"></span>
+            <span class="audience-card__icon" aria-hidden="true">
+              {% if forloop.counter == 1 %}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="5" width="20" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M2 10h20" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M6 15h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+              {% elif forloop.counter == 2 %}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M3 21h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M5 21V9l7-5 7 5v12" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M9 21v-6h6v6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              </svg>
+              {% elif forloop.counter == 3 %}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3 4.5 6.5v5.2c0 4.5 3.2 7.8 7.5 9.3 4.3-1.5 7.5-4.8 7.5-9.3V6.5L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M9.2 12.2 11 14l3.8-3.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {% else %}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M7 3.5h7.2L19 8.3V20a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M14 3.5V8h4.8" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M8.5 12.5h7M8.5 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+              {% endif %}
+            </span>
+            <span class="audience-card__body">
+              <span class="audience-card__text">{{ item }}</span>
+              <span class="audience-card__check" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </span>
+          </button>
+          {% endfor %}
+        </div>
+
+        <div class="audience-cta" data-audience-cta aria-live="polite">
+          <div class="audience-cta__inner">
+            <p class="audience-cta__text">
+              Визначили у себе <strong data-audience-count>1+</strong> пунктів?
+              {% block_plain 'home' 'audience_cta_text' %}
+            </p>
+            <a class="btn btn-primary btn-primary-red" href="{% block_plain 'home' 'audience_cta_href' %}">{% block_plain 'home' 'audience_cta_label' %}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+  {% elif rb.block.block_type == 'services_teaser' %}
+    {% section_visible 'home' 'services_section_visible' as show_services %}
+    {% if show_services %}
+    <section class="section section--services" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="section__eyebrow section__eyebrow--badge">{% block_plain 'home' 'services_eyebrow' %}</p>
+          <h2 id="services-title">{% block_plain 'home' 'services_title' %}</h2>
+          <p class="section__lead">{% block_plain 'home' 'services_intro' %}</p>
+        </header>
+
+        <div class="services-grid">
+          {% for s in rb.items %}
+          <article
+            class="service-card"
+            data-reveal
+            data-reveal-delay="{{ forloop.counter0 }}"
+          >
+            <span class="service-card__watermark" aria-hidden="true">
+              {% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}
+            </span>
+            <h3 class="service-card__title">{{ s.title }}</h3>
+            <p class="service-card__desc">{{ s.short_description }}</p>
+            <button
+              type="button"
+              class="service-card__more"
+              hx-get="{{ s.get_absolute_url }}"
+              hx-target="#service-modal-content"
+              hx-swap="innerHTML"
+              aria-haspopup="dialog"
+              aria-controls="service-modal"
+            >
+              <span>{% block_plain 'home' 'services_card_more' %}</span>
+              <svg class="service-card__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </article>
+          {% endfor %}
+        </div>
+
+        <p class="section__footer section__footer--center" data-reveal>
+          <a class="btn btn-primary btn-primary-red btn-lg" href="{% block_plain 'home' 'services_footer_href' %}">{% block_plain 'home' 'services_footer_cta' %}</a>
+        </p>
+      </div>
+    </section>
+    {% endif %}
+
+  {% elif rb.block.block_type == 'advantages' %}
+    {% section_visible 'home' 'advantages_section_visible' as show_advantages %}
+    {% if show_advantages %}
+    <section class="section section--advantages" id="advantages" aria-labelledby="advantages-title">
+      <div class="container">
+        <div class="advantages-layout">
+          {% block_image_url 'home' 'advantages_image' as advantages_img %}
+          <p class="advantages-intro__badge" data-reveal>
+            <span class="advantages-intro__dot" aria-hidden="true"></span>
+            {% block_plain 'home' 'advantages_eyebrow' %}
+          </p>
+          <header class="advantages-intro" data-reveal>
+            <h2 id="advantages-title" class="advantages-intro__title">
+              {% block_plain 'home' 'advantages_title' %}
+            </h2>
+            <p class="advantages-intro__lead">{% block_plain 'home' 'advantages_intro' %}</p>
+            {% if advantages_img %}
+            <figure class="advantages-intro__media">
+              <img
+                src="{{ advantages_img }}"
+                alt="{% block_plain 'home' 'advantages_title' %}"
+                width="800"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+            {% endif %}
+          </header>
+
+          <ol class="advantages-timeline" aria-label="Переваги співпраці">
+            {% for item in rb.items %}
+            <li
+              class="advantage-item"
+              data-reveal
+              data-reveal-delay="{{ forloop.counter0 }}"
+            >
+              <span class="advantage-item__rail" aria-hidden="true">
+                <span class="advantage-item__node"></span>
+              </span>
+              <article class="advantage-item__card">
+                <span class="advantage-item__num" aria-hidden="true">
+                  {% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}
+                </span>
+                <div class="advantage-item__copy">
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.text }}</p>
+                </div>
+              </article>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+  {% elif rb.block.block_type == 'blog_teaser' %}
+    {% section_visible 'home' 'blog_section_visible' as show_blog %}
+    {% if show_blog %}
+    <section class="section section--blog" id="blog" aria-labelledby="blog-title">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="section__eyebrow section__eyebrow--badge">{% block_plain 'home' 'blog_eyebrow' %}</p>
+          <h2 id="blog-title">{% block_plain 'home' 'blog_title' %}</h2>
+          <p class="section__lead">{% block_plain 'home' 'blog_intro' %}</p>
+        </header>
+
+        <div class="blog-filters blog-filters--home" role="tablist" aria-label="Фільтр матеріалів" data-reveal>
+          <button
+            type="button"
+            class="blog-filter is-active"
+            role="tab"
+            aria-selected="true"
+            data-blog-filter
+            hx-get="{% url 'blog:partial' %}?teaser=1&limit={{ rb.block.payload.limit|default:3 }}"
+            hx-target="#home-blog-grid"
+            hx-swap="innerHTML"
+          >{% block_plain 'home' 'blog_filter_all' %}</button>
+          <button
+            type="button"
+            class="blog-filter"
+            role="tab"
+            aria-selected="false"
+            data-blog-filter
+            hx-get="{% url 'blog:partial' %}?teaser=1&limit={{ rb.block.payload.limit|default:3 }}&category=keysy"
+            hx-target="#home-blog-grid"
+            hx-swap="innerHTML"
+          >{% block_plain 'home' 'blog_filter_cases' %}</button>
+          <button
+            type="button"
+            class="blog-filter"
+            role="tab"
+            aria-selected="false"
+            data-blog-filter
+            hx-get="{% url 'blog:partial' %}?teaser=1&limit={{ rb.block.payload.limit|default:3 }}&category=novyny"
+            hx-target="#home-blog-grid"
+            hx-swap="innerHTML"
+          >{% block_plain 'home' 'blog_filter_news' %}</button>
+        </div>
+
+        <div id="home-blog-grid">
+          {% include "blog/partials/teaser_grid.html" with posts=rb.items %}
+        </div>
+
+        <p class="section__footer section__footer--center" data-reveal>
+          <a class="btn btn-primary btn-primary-red" href="{% url 'blog:list' %}">{% block_plain 'home' 'blog_footer_cta' %}</a>
+        </p>
+      </div>
+    </section>
+    {% endif %}
+
+  {% elif rb.block.block_type == 'lead_form' %}
+    {% section_visible 'home' 'lead_section_visible' as show_lead %}
+    {% if show_lead %}
+    <section
+      class="section section--cta"
+      id="{{ rb.block.payload.anchor|default:'lead-form' }}"
+      aria-labelledby="lead-title"
+    >
+      <div class="container">
+        <div class="cta-panel" data-reveal>
+          <div class="cta-panel__copy">
+            <p class="section__eyebrow">{% block_plain 'home' 'lead_eyebrow' %}</p>
+            <h2 id="lead-title">{% block_plain 'home' 'lead_title' %}</h2>
+            <p class="section__lead">{% block_plain 'home' 'lead_intro' %}</p>
+            {% if site_settings.phone %}
+              <a class="cta-panel__phone" href="tel:{{ site_settings.phone }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6.6 10.8c1.6 3.1 3.5 5 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+                {{ site_settings.phone }}
+              </a>
+            {% endif %}
+          </div>
+          <div class="cta-panel__form">
+            {% include "leads/partials/form.html" with lead_form=lead_form source="home" %}
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% endblock %}

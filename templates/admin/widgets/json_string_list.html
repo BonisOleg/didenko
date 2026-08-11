@@ -1,0 +1,30 @@
+{% load i18n %}
+<div class="json-list-widget" data-json-list data-mode="string">
+  <div class="json-list-widget__items" data-json-list-items>
+    {% for item in widget.items %}
+    <div class="json-list-widget__row" data-json-list-row>
+      <label class="json-list-widget__row-label">
+        <span class="json-list-widget__row-index">{{ widget.item_label }} {{ forloop.counter }}</span>
+        <textarea class="{{ widget.input_class }}" rows="2"{{ widget.item_attrs }}>{{ item }}</textarea>
+      </label>
+      <button type="button" class="json-list-widget__remove" data-json-list-remove aria-label="{% trans 'Видалити' %}">
+        Видалити
+      </button>
+    </div>
+    {% endfor %}
+  </div>
+  <template data-json-list-template>
+    <div class="json-list-widget__row" data-json-list-row>
+      <label class="json-list-widget__row-label">
+        <span class="json-list-widget__row-index">{{ widget.item_label }}</span>
+        <textarea class="{{ widget.input_class }}" rows="2"{{ widget.item_attrs }}></textarea>
+      </label>
+      <button type="button" class="json-list-widget__remove" data-json-list-remove aria-label="{% trans 'Видалити' %}">
+        Видалити
+      </button>
+    </div>
+  </template>
+  <button type="button" class="json-list-widget__add" data-json-list-add>
+    {{ widget.add_label }}
+  </button>
+</div>

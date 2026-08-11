@@ -1,0 +1,78 @@
+{% load site_content %}
+<form class="lead-form interactive-form"
+      hx-post="{% url 'leads:submit' %}"
+      hx-target="this"
+      hx-swap="outerHTML"
+      novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="source" value="{{ source|default:'home' }}">
+  {% if lead_form.prefix %}
+  <input type="hidden" name="form_prefix" value="{{ lead_form.prefix }}">
+  {% endif %}
+  {{ lead_form.honeypot }}
+  {% if lead_form.service %}{{ lead_form.service }}{% endif %}
+  {% if lead_form.selected_topics %}{{ lead_form.selected_topics }}{% endif %}
+
+  <div class="form-group floating-group">
+    {{ lead_form.name }}
+    <label class="floating-label" for="{{ lead_form.name.id_for_label }}">{% block_plain 'site' 'form_label_name' %}</label>
+    <div
+      class="field-error{% if lead_form.name.errors %} is-visible{% endif %}"
+      data-error-for="name"
+      {% if not lead_form.name.errors %}hidden{% endif %}
+      role="alert"
+      aria-live="polite"
+    >{% if lead_form.name.errors %}{{ lead_form.name.errors|striptags }}{% endif %}</div>
+  </div>
+
+  <div class="form-group floating-group">
+    {{ lead_form.phone }}
+    <label class="floating-label" for="{{ lead_form.phone.id_for_label }}">{% block_plain 'site' 'form_label_phone' %}</label>
+    <div
+      class="field-error{% if lead_form.phone.errors %} is-visible{% endif %}"
+      data-error-for="phone"
+      {% if not lead_form.phone.errors %}hidden{% endif %}
+      role="alert"
+      aria-live="polite"
+    >{% if lead_form.phone.errors %}{{ lead_form.phone.errors|striptags }}{% endif %}</div>
+  </div>
+
+  <div class="form-group floating-group">
+    {{ lead_form.email }}
+    <label class="floating-label" for="{{ lead_form.email.id_for_label }}">{% block_plain 'site' 'form_label_email' %}</label>
+    <div
+      class="field-error{% if lead_form.email.errors %} is-visible{% endif %}"
+      data-error-for="email"
+      {% if not lead_form.email.errors %}hidden{% endif %}
+      role="alert"
+      aria-live="polite"
+    >{% if lead_form.email.errors %}{{ lead_form.email.errors|striptags }}{% endif %}</div>
+  </div>
+
+  <div class="checkbox-group">
+    <label class="custom-checkbox" for="{{ lead_form.consent.id_for_label }}">
+      {{ lead_form.consent }}
+      <span class="checkmark" aria-hidden="true"></span>
+      <span class="checkbox-text">
+        {% block_plain 'site' 'form_consent_prefix' %}
+        <a href="{% url 'pages:page_detail' slug='polityka-konfidentsiynosti' %}" class="link-underline">{% block_plain 'site' 'form_consent_link' %}</a>
+      </span>
+    </label>
+    <div
+      class="field-error{% if lead_form.consent.errors %} is-visible{% endif %}"
+      data-error-for="consent"
+      {% if not lead_form.consent.errors %}hidden{% endif %}
+      role="alert"
+      aria-live="polite"
+    >{% if lead_form.consent.errors %}{{ lead_form.consent.errors|striptags }}{% endif %}</div>
+  </div>
+
+  {% if lead_form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">{{ lead_form.non_field_errors }}</div>
+  {% endif %}
+
+  <button type="submit" class="btn btn-primary btn-primary-red w-100 btn-submit-primary">
+    <span class="btn-submit-primary__label">{% block_plain 'site' 'form_submit' %}</span>
+    <span class="htmx-indicator spinner" aria-hidden="true"></span>
+  </button>
+</form>

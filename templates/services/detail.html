@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static site_content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services-page.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="service-detail">
+  <section class="section service-detail__main">
+    <div class="container service-detail__grid">
+      <div class="service-detail__content">
+        <p class="services-hero__badge">{% block_plain 'services' 'detail_badge' %}</p>
+        <h1>{{ seo_h1 }}</h1>
+        {% if service.short_description %}
+          <p class="service-detail__lead">{{ service.short_description }}</p>
+        {% endif %}
+
+        {% if service.timeline %}
+          <p class="service-detail__timeline">
+            <span>{% block_plain 'services' 'detail_timeline_label' %}</span> {{ service.timeline }}
+          </p>
+        {% endif %}
+
+        {% if service.deliverables %}
+          <div class="service-detail__block">
+            <h2>{% block_plain 'services' 'detail_deliverables_title' %}</h2>
+            <ul class="service-card__list service-card__list--detail">
+              {% for item in service.deliverables %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if service.expected_result %}
+          <div class="service-detail__block">
+            <h2>{% block_plain 'services' 'detail_result_title' %}</h2>
+            <p>{{ service.expected_result }}</p>
+          </div>
+        {% endif %}
+
+        {% if service.body %}
+          <div class="service-detail__body prose">
+            {{ service.body|safe }}
+          </div>
+        {% endif %}
+      </div>
+
+      <aside class="service-detail__aside" id="lead-form">
+        <div class="service-detail__form-card">
+          <h2>{{ service.cta_label|default:"Замовити послугу" }}</h2>
+          <p class="service-detail__form-lead">
+            Залиште контакти — проведу первинний аналіз і запропоную наступні кроки.
+          </p>
+          {% include "leads/partials/form.html" with lead_form=lead_form source="service" %}
+        </div>
+      </aside>
+    </div>
+  </section>
+</article>
+{% endblock %}

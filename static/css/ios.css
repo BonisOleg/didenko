@@ -1,0 +1,129 @@
+/* iOS Safari adaptations */
+
+@supports (-webkit-touch-callout: none) {
+  .site-header {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .site-footer {
+    padding-bottom: calc(1.35rem + env(safe-area-inset-bottom));
+  }
+
+  .about-hero__frame,
+  .about-hero__glass,
+  .cta-panel__form,
+  .contact-card,
+  .post-card__watermark {
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .about-hero__photo {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .lightbox {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .lightbox__stage {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .about-hero__actions .btn,
+  .site-footer__messenger,
+  .contact-messenger,
+  .contact-card,
+  .pill,
+  .btn-load-more,
+  .btn-cta-primary,
+  .btn-primary-red,
+  .share-pill {
+    min-height: 44px;
+  }
+
+  input,
+  textarea,
+  select,
+  button,
+  .btn,
+  .form-control {
+    font-size: 16px;
+  }
+
+  .lead-form .form-control,
+  .lead-form .form-input {
+    font-size: 16px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .lead-form .field-error {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .hero__media img {
+    -webkit-transform: translateZ(0);
+  }
+
+  .site-header,
+  .service-card,
+  .cta-panel__form {
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .hero {
+    min-height: -webkit-fill-available;
+  }
+
+  body {
+    min-height: -webkit-fill-available;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .site-logo,
+  .site-footer__logo {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .site-nav > a,
+  .btn,
+  .service-card,
+  .blog-card,
+  .audience-card,
+  .about-principle,
+  .site-footer__messenger,
+  .site-footer__nav > a {
+    -webkit-tap-highlight-color: rgba(181, 0, 0, 0.14);
+  }
+
+  .btn:hover,
+  .btn-primary-red:hover,
+  .btn-cta-primary:hover,
+  .service-card:hover,
+  .blog-card:hover,
+  .post-card:hover,
+  .audience-card:hover,
+  .advantage-item:hover,
+  .advantage-item:focus-within,
+  .about-principle:hover,
+  .site-footer__messenger:hover,
+  .site-footer__messenger:focus-visible,
+  .site-footer__nav > a:hover,
+  .site-footer__nav > a:focus-visible {
+    transform: none;
+  }
+
+  .btn-primary:hover,
+  .btn-primary-red:hover,
+  .btn-cta-primary:hover {
+    background: var(--color-accent-red, #B50000);
+    box-shadow: var(--shadow-btn-red, 0 8px 20px rgba(181, 0, 0, 0.28));
+  }
+
+  .advantage-item:hover .advantage-item__card {
+    transform: none;
+  }
+}

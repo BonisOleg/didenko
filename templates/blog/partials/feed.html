@@ -1,0 +1,53 @@
+{% load blog_tags site_content %}
+{% load static %}
+
+{% if show_featured and featured_post %}
+<article class="post-card post-card--featured" style="--order: 0">
+  <div class="post-card__featured-grid">
+    <div class="post-card__featured-copy">
+      <span class="post-card__badge post-card__badge--featured">{{ featured_post|blog_badge }}</span>
+      <p class="post-card__meta">
+        {% if featured_post.published_label %}{{ featured_post.published_label }}{% endif %}
+        <span aria-hidden="true">•</span>
+        {{ featured_post.read_time_minutes }} хв читання
+        <span aria-hidden="true">•</span>
+        {% block_plain 'site' 'brand_name' %}
+      </p>
+      <h2 class="post-card__title post-card__title--featured">
+        <a href="{{ featured_post.get_absolute_url }}">{{ featured_post.title }}</a>
+      </h2>
+      {% if featured_post.excerpt %}
+        <p class="post-card__summary">{{ featured_post.excerpt }}</p>
+      {% endif %}
+      <a class="post-card__read" href="{{ featured_post.get_absolute_url }}">
+        {{ featured_post|blog_read_more }}
+        <span class="post-card__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+    <div class="post-card__featured-visual" aria-hidden="true">
+      {% if featured_post.cover_image %}
+        <img
+          src="{{ featured_post.cover_image.url }}"
+          alt="{{ featured_post.cover_alt|default:'' }}"
+          loading="lazy"
+          width="720"
+          height="480"
+        >
+      {% else %}
+        <div class="post-card__seal">
+          <span class="post-card__seal-ring"></span>
+          <span class="post-card__seal-text">{% block_plain 'blog' 'seal_text' %}</span>
+          <span class="post-card__seal-sub">{% block_plain 'blog' 'seal_sub' %}</span>
+        </div>
+        <div class="post-card__watermark">{% block_lines 'blog' 'watermark' %}</div>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endif %}
+
+{% include "blog/partials/cards.html" %}
+
+{% if not featured_post and not page_obj.object_list %}
+  <p class="blog-empty">{% block_plain 'blog' 'empty' %}</p>
+{% endif %}

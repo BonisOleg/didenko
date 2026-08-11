@@ -1,0 +1,13 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.env
+media
+staticfiles
+*.md
+*.pdf
+*.docx
+generate_sitemap_pdf.py
+db.sqlite3

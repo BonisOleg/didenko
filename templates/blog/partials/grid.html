@@ -1,0 +1,29 @@
+<div class="row g-4">
+  {% for post in page_obj %}
+  <div class="col-md-6 col-lg-4">
+    <a class="card-link" href="{{ post.get_absolute_url }}">
+      <h2>{{ post.title }}</h2>
+      {% if post.category %}<span class="meta">{{ post.category.title }}</span>{% endif %}
+      <p>{{ post.excerpt }}</p>
+    </a>
+  </div>
+  {% empty %}
+  <p>Записів поки немає.</p>
+  {% endfor %}
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="pagination-nav" aria-label="Пагінація">
+  {% if page_obj.has_previous %}
+  <a href="?{% if active_category %}category={{ active_category }}&{% endif %}page={{ page_obj.previous_page_number }}"
+     hx-get="{% url 'blog:partial' %}?{% if active_category %}category={{ active_category }}&{% endif %}page={{ page_obj.previous_page_number }}"
+     hx-target="#blog-grid">Назад</a>
+  {% endif %}
+  <span>Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a href="?{% if active_category %}category={{ active_category }}&{% endif %}page={{ page_obj.next_page_number }}"
+     hx-get="{% url 'blog:partial' %}?{% if active_category %}category={{ active_category }}&{% endif %}page={{ page_obj.next_page_number }}"
+     hx-target="#blog-grid">Далі</a>
+  {% endif %}
+</nav>
+{% endif %}

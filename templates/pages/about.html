@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="about-page">
+  <section class="about-hero" aria-labelledby="about-title">
+    <div class="container about-hero__grid">
+      <aside class="about-hero__card" data-reveal{% if not page.hero_image %} aria-hidden="true"{% endif %}>
+        <div class="about-hero__frame">
+          {% if page.hero_image %}
+            <img
+              class="about-hero__photo"
+              src="{{ page.hero_image.url }}"
+              alt="{% if page.hero_image_alt %}{{ page.hero_image_alt }}{% else %}{{ seo_h1 }}{% endif %}"
+              width="800"
+              height="1000"
+              decoding="async"
+              fetchpriority="high"
+            >
+          {% else %}
+            <div class="about-hero__mark">
+              <span class="about-hero__initials">ДВ</span>
+              <span class="about-hero__role">Арбітражна керуюча</span>
+            </div>
+          {% endif %}
+          {% if page.hero_caption %}
+            <div class="about-hero__glass">
+              {{ page.hero_caption }}
+            </div>
+          {% endif %}
+        </div>
+      </aside>
+
+      <div class="about-hero__copy" data-reveal>
+        <p class="about-kicker"><span>ПРО МЕНЕ</span></p>
+        <h1 id="about-title">{{ seo_h1 }}</h1>
+        <p class="about-hero__subtitle">
+          Практичний досвід у справах про неплатоспроможність фізичних осіб.
+        </p>
+        <div class="about-hero__actions">
+          <a class="btn btn-primary btn-primary-red btn-lg" href="#lead-form">Залишити заявку</a>
+          <a class="btn btn-ghost btn-lg" href="#about-metrics">Ключові показники</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="about-body">
+    <div class="container about-body__inner">
+      {{ page.body|safe }}
+    </div>
+  </div>
+
+  <section class="section section--cta" id="lead-form" aria-labelledby="about-lead-title">
+    <div class="container">
+      <div class="cta-panel" data-reveal>
+        <div class="cta-panel__copy">
+          <p class="section__eyebrow">Звʼязок</p>
+          <h2 id="about-lead-title">Залишити заявку</h2>
+          <p class="section__lead">
+            Опишіть ситуацію коротко — проведу первинну оцінку та підкажу наступні кроки.
+            Конфіденційно та без зобовʼязань.
+          </p>
+          {% if site_settings.phone %}
+            <a class="cta-panel__phone" href="tel:{{ site_settings.phone }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6.6 10.8c1.6 3.1 3.5 5 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+              {{ site_settings.phone }}
+            </a>
+          {% endif %}
+        </div>
+        <div class="cta-panel__form">
+          {% include "leads/partials/form.html" with lead_form=lead_form source="home" %}
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
+{% endblock %}

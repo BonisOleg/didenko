@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static site_content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contacts.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="contacts-page">
+  {% section_visible 'contacts' 'page_section_visible' as show_contacts %}
+  {% if show_contacts %}
+  <section class="contacts-hero" aria-labelledby="contacts-title">
+    <div class="container">
+      <span class="badge">{% block_plain 'contacts' 'hero_badge' %}</span>
+      <h1 id="contacts-title">{{ seo_h1|default:"Контакти" }}</h1>
+      <p class="hero-subtext">{% block_plain 'contacts' 'hero_sub' %}</p>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="contacts-main" aria-label="Контактна інформація та заявка">
+    <div class="container contacts-grid-container">
+      <div class="contact-info-col">
+        <p class="contact-info-col__badge">{% block_plain 'contacts' 'info_badge' %}</p>
+        <h2 class="contact-info-col__title">{% block_plain 'contacts' 'info_title' %}</h2>
+
+        {% if site_settings.phone %}
+        <a href="tel:{{ site_settings.phone }}" class="contact-card">
+          <div class="icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M6.6 10.8c1.6 3.1 3.5 5 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="card-details">
+            <span class="label">{% block_plain 'contacts' 'label_phone' %}</span>
+            <span class="value">{{ site_settings.phone }}</span>
+          </div>
+        </a>
+        {% endif %}
+
+        {% if site_settings.email %}
+        <div class="contact-card contact-card--email">
+          <a
+            href="mailto:{{ site_settings.email }}"
+            class="contact-card__mail"
+            aria-label="Написати на {{ site_settings.email }}"
+          >
+            <div class="icon-wrap" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M4 6.5h16v11H4v-11Z" stroke="currentColor" stroke-width="1.6"/>
+                <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="card-details">
+              <span class="label">{% block_plain 'contacts' 'label_email' %}</span>
+              <span class="value">{{ site_settings.email }}</span>
+            </div>
+          </a>
+          <button
+            type="button"
+            class="contact-copy-btn"
+            data-copy="{{ site_settings.email }}"
+            data-copy-toast="{% block_plain 'contacts' 'email_copied' %}"
+          >
+            {% block_plain 'contacts' 'email_copy_hint' %}
+          </button>
+        </div>
+        {% endif %}
+
+        <div class="contact-card contact-card--static">
+          <div class="icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="card-details">
+            <span class="label">{% block_plain 'contacts' 'label_region' %}</span>
+            <span class="value">
+              {% if site_settings.address %}
+                {{ site_settings.address }} {% block_plain 'contacts' 'region_suffix' %}
+              {% else %}
+                Україна {% block_plain 'contacts' 'region_suffix' %}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+
+        <div class="contact-meta-row">
+          <p class="contact-hours">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M12 7.5v5l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span>{{ site_settings.work_hours|default:"пн–пт з 9:00 до 18:00" }}</span>
+          </p>
+
+          {% if site_settings.social_links %}
+          <div class="contact-messengers" aria-label="Доступні месенджери">
+            {% for link in site_settings.social_links %}
+              {% if link.url and link.label %}
+              <a
+                class="contact-messenger contact-messenger--{{ link.label|lower }}"
+                href="{{ link.url }}"
+                rel="noopener noreferrer"
+                {% if link.url|slice:":4" == "http" %}target="_blank"{% endif %}
+              >
+                <span class="contact-messenger__icon" aria-hidden="true"></span>
+                {{ link.label }}
+              </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div id="lead-form-container" class="contact-form-card">
+        <h2>{% block_plain 'contacts' 'form_title' %}</h2>
+        <p class="form-subtext">{% block_plain 'contacts' 'form_subtext' %}</p>
+        {% include "leads/partials/form.html" with lead_form=lead_form source="contacts" %}
+      </div>
+    </div>
+
+    {% if site_settings.map_embed_url %}
+    <div class="container contacts-map-wrap">
+      <div class="contacts-map" role="region" aria-label="Інтерактивна карта">
+        <div class="contacts-map__frame">
+          <iframe
+            src="{{ site_settings.map_embed_url }}"
+            title="Карта на Google Maps"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </section>
+</article>
+{% endblock %}

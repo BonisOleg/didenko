@@ -1,0 +1,124 @@
+{% load static site_content %}
+{% section_visible 'site' 'nav_home_visible' as show_nav_home %}
+{% section_visible 'site' 'nav_about_visible' as show_nav_about %}
+{% section_visible 'site' 'nav_services_visible' as show_nav_services %}
+{% section_visible 'site' 'nav_blog_visible' as show_nav_blog %}
+{% section_visible 'site' 'nav_contacts_visible' as show_nav_contacts %}
+{% block_image_url 'site' 'logo_footer' 'img/brand/logo-mark-on-dark.png' as logo_footer_url %}
+{% block_plain 'site' 'nav_home_href' as nav_home_href %}
+{% block_plain 'site' 'nav_about_href' as nav_about_href %}
+{% block_plain 'site' 'nav_services_href' as nav_services_href %}
+{% block_plain 'site' 'nav_blog_href' as nav_blog_href %}
+{% block_plain 'site' 'nav_contacts_href' as nav_contacts_href %}
+{% block_plain 'site' 'footer_policy_href' as footer_policy_href %}
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <a
+        class="site-footer__logo"
+        href="{{ nav_home_href }}"
+        aria-label="{% block_plain 'site' 'brand_name' %} — {% block_plain 'site' 'brand_title' %}"
+      >
+        <img
+          class="site-footer__logo-mark"
+          src="{{ logo_footer_url }}"
+          alt=""
+          width="138"
+          height="111"
+          decoding="async"
+        >
+        <span class="site-footer__logo-text">
+          <strong>{% block_plain 'site' 'brand_name' %}</strong>
+          <span>{% block_plain 'site' 'brand_title' %}</span>
+        </span>
+      </a>
+      <p>{% block_plain 'site' 'footer_tagline' %}</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="{% block_plain 'site' 'footer_nav_aria' %}">
+      <p class="site-footer__heading">{% block_plain 'site' 'footer_nav_heading' %}</p>
+      {% if show_nav_home %}
+        <a href="{{ nav_home_href }}"{% nav_aria_current nav_home_href %}>{% block_plain 'site' 'nav_home_label' %}</a>
+      {% endif %}
+      {% if show_nav_about %}
+        <a href="{{ nav_about_href }}"{% nav_aria_current nav_about_href %}>{% block_plain 'site' 'nav_about_label' %}</a>
+      {% endif %}
+      {% if show_nav_services %}
+        <a href="{{ nav_services_href }}"{% nav_aria_current nav_services_href %}>{% block_plain 'site' 'nav_services_label' %}</a>
+      {% endif %}
+      {% if show_nav_blog %}
+        <a href="{{ nav_blog_href }}"{% nav_aria_current nav_blog_href %}>{% block_plain 'site' 'nav_blog_label' %}</a>
+      {% endif %}
+      {% if show_nav_contacts %}
+        <a href="{{ nav_contacts_href }}"{% nav_aria_current nav_contacts_href %}>{% block_plain 'site' 'nav_contacts_label' %}</a>
+      {% endif %}
+      <a href="{{ footer_policy_href }}"{% nav_aria_current footer_policy_href %}>{% block_plain 'site' 'footer_policy_label' %}</a>
+    </nav>
+
+    <div class="site-footer__contacts">
+      <p class="site-footer__heading">{% block_plain 'site' 'footer_contacts_heading' %}</p>
+      {% if site_settings.phone %}
+        <a class="site-footer__contact" href="tel:{{ site_settings.phone }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6.6 10.8c1.6 3.1 3.5 5 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+          <span>{{ site_settings.phone }}</span>
+        </a>
+      {% endif %}
+      {% if site_settings.email %}
+        <a class="site-footer__contact" href="mailto:{{ site_settings.email }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6.5h16v11H4v-11Z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+          <span>{{ site_settings.email }}</span>
+        </a>
+      {% endif %}
+      <p class="site-footer__meta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="12" cy="10" r="2.4" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <span>{% if site_settings.address %}{{ site_settings.address }}{% else %}Україна{% endif %}</span>
+      </p>
+      <p class="site-footer__meta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M12 7.5v5l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span>{% block_plain 'site' 'footer_hours_prefix' %} {{ site_settings.work_hours|default:"пн–пт з 9:00 до 18:00" }}</span>
+      </p>
+    </div>
+
+    <div class="site-footer__social">
+      <p class="site-footer__heading">{% block_plain 'site' 'footer_messengers_heading' %}</p>
+      {% if site_settings.social_links %}
+        <div class="site-footer__messengers" aria-label="Доступні месенджери">
+          {% for link in site_settings.social_links %}
+            {% if link.url and link.label %}
+              <a
+                class="site-footer__messenger site-footer__messenger--{{ link.label|lower }}"
+                href="{{ link.url }}"
+                rel="noopener noreferrer"
+                {% if link.url|slice:":4" == "http" %}target="_blank"{% endif %}
+              >
+                <span class="site-footer__messenger-icon" aria-hidden="true"></span>
+                {{ link.label }}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p class="site-footer__copy">© {% now "Y" %} {% block_plain 'site' 'brand_name' %}. Усі права захищено.</p>
+    <a
+      class="site-footer__credit"
+      href="{% block_plain 'site' 'footer_madeby_url' %}"
+      rel="noopener noreferrer"
+      target="_blank"
+    >{% block_plain 'site' 'footer_madeby_label' %}</a>
+  </div>
+</footer>

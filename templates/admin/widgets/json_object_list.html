@@ -1,0 +1,48 @@
+{% load i18n %}
+<div class="json-list-widget" data-json-list data-mode="object">
+  <div class="json-list-widget__items" data-json-list-items>
+    {% for row in widget.rows %}
+    <div class="json-list-widget__card" data-json-list-row>
+      <div class="json-list-widget__card-head">
+        <span class="json-list-widget__row-index">Пункт {{ forloop.counter }}</span>
+        <button type="button" class="json-list-widget__remove" data-json-list-remove aria-label="{% trans 'Видалити' %}">
+          Видалити
+        </button>
+      </div>
+      {% for field in row.fields %}
+      <label class="json-list-widget__field">
+        <span class="json-list-widget__field-label">{{ field.label }}</span>
+        {% if field.kind == 'textarea' %}
+        <textarea class="{{ field.css }}" name="{{ field.name }}" rows="5">{{ field.value }}</textarea>
+        {% else %}
+        <input type="text" class="{{ field.css }}" name="{{ field.name }}" value="{{ field.value }}">
+        {% endif %}
+      </label>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  <template data-json-list-template>
+    <div class="json-list-widget__card" data-json-list-row>
+      <div class="json-list-widget__card-head">
+        <span class="json-list-widget__row-index">Пункт</span>
+        <button type="button" class="json-list-widget__remove" data-json-list-remove aria-label="{% trans 'Видалити' %}">
+          Видалити
+        </button>
+      </div>
+      {% for field in widget.empty_fields %}
+      <label class="json-list-widget__field">
+        <span class="json-list-widget__field-label">{{ field.label }}</span>
+        {% if field.kind == 'textarea' %}
+        <textarea class="{{ field.css }}" name="{{ field.name }}" rows="5"></textarea>
+        {% else %}
+        <input type="text" class="{{ field.css }}" name="{{ field.name }}" value="">
+        {% endif %}
+      </label>
+      {% endfor %}
+    </div>
+  </template>
+  <button type="button" class="json-list-widget__add" data-json-list-add>
+    {{ widget.add_label }}
+  </button>
+</div>
