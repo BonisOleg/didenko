@@ -1,28 +1,12 @@
-"""Seed HTML bodies for CMS pages (editable via admin TinyMCE)."""
+"""Seed HTML bodies for CMS pages (editable via admin TinyMCE).
+
+Метрики «Про мене» — окреме поле Page.metrics (не в цьому HTML).
+"""
 
 ABOUT_BODY = """
 <div class="about-lead" data-reveal>
   <p>Супроводжую клієнтів на всіх етапах процедури неплатоспроможності — від первинної консультації до прийняття остаточного рішення суду про повне списання боргів. Працюю професійно, конфіденційно та виключно в межах законодавства України.</p>
   <p>Моя мета — допомогти кожному, хто опинився у складній фінансовій ситуації, пройти процедуру банкрутства без зайвого стресу та отримати можливість почати фінансове життя з чистого аркуша.</p>
-</div>
-
-<div class="about-stats" id="about-metrics" data-reveal aria-label="Ключові показники">
-  <div class="about-stat">
-    <span class="about-stat__value" data-count="100" data-suffix="%">0%</span>
-    <span class="about-stat__label">Дотримання законодавства України</span>
-  </div>
-  <div class="about-stat">
-    <span class="about-stat__value" data-count="3" data-suffix="+">0+</span>
-    <span class="about-stat__label">Етапів повного супроводу «під ключ»</span>
-  </div>
-  <div class="about-stat">
-    <span class="about-stat__value" data-count="100" data-suffix="%">0%</span>
-    <span class="about-stat__label">Конфіденційність та захист даних</span>
-  </div>
-  <div class="about-stat">
-    <span class="about-stat__value" data-count="40" data-suffix="+">0+</span>
-    <span class="about-stat__label">Відкритих проваджень у різних регіонах України</span>
-  </div>
 </div>
 
 <section class="about-block" id="history" data-reveal aria-labelledby="about-history-title">

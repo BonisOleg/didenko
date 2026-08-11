@@ -163,6 +163,14 @@ class Page(SeoFieldsMixin, TimeStampedModel):
             'Текст на склі поверх фото. Очистіть поле, щоб прибрати підпис.'
         ),
     )
+    metrics = models.JSONField(
+        'Ключові показники',
+        default=list,
+        blank=True,
+        help_text=(
+            'Лише для «Про мене» (pro-nas). Список: число, суфікс (% / +), підпис.'
+        ),
+    )
 
     class Meta:
         db_table = 'pages_page'
@@ -180,6 +188,11 @@ class Page(SeoFieldsMixin, TimeStampedModel):
         from django.urls import reverse
 
         return reverse('pages:page_detail', kwargs={'slug': self.slug})
+
+    def normalized_metrics(self) -> list[dict[str, str]]:
+        from src.pages.about_metrics import normalize_metrics
+
+        return normalize_metrics(self.metrics)
 
 
 class HomeHero(TimeStampedModel):

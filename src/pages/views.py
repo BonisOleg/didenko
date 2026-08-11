@@ -32,7 +32,10 @@ class PageDetailView(View):
             raise Http404
         ctx = {'page': page, **resolve_page_seo(page)}
         if slug == 'pro-nas':
+            from src.pages.about_body_render import render_about_body_html
+
             ctx['lead_form'] = LeadForm(source=Lead.Source.HOME)
+            ctx['about_body_html'] = render_about_body_html(page)
             return render(request, self.about_template_name, ctx)
         return render(request, self.template_name, ctx)
 

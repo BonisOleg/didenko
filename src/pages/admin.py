@@ -1,33 +1,13 @@
-from django import forms
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
 from src.core.admin_tinymce import TinyMCEAdminMixin
 from src.pages.about_hero_validators import ABOUT_HERO_HELP_TEXT
 from src.pages.admin_home_block import HomeBlockAdmin
-from src.pages.admin_json_forms import SiteSettingsAdminForm
+from src.pages.admin_json_forms import PageAdminForm, SiteSettingsAdminForm
 from src.pages.admin_site_content_proxies import register_site_content_section_admins
 from src.pages.admin_theme import ActiveThemeAdmin  # noqa: F401 — registers ActiveTheme
 from src.pages.models import HomeBlock, HomeHero, Page, SiteSettings
-
-
-class PageAdminForm(forms.ModelForm):
-    class Meta:
-        model = Page
-        fields = '__all__'
-
-    def clean_hero_image(self):
-        image = self.cleaned_data.get('hero_image')
-        slug = self.cleaned_data.get('slug') or getattr(self.instance, 'slug', '')
-        if image and slug != 'pro-nas':
-            raise forms.ValidationError(
-                'Фото «Про мене» доступне лише для сторінки зі slug «pro-nas».',
-            )
-        return image
-
-    def clean_hero_caption(self):
-        caption = (self.cleaned_data.get('hero_caption') or '').strip()
-        return caption
 
 
 @admin.register(SiteSettings)
@@ -153,6 +133,18 @@ class PageAdmin(TinyMCEAdminMixin, ModelAdmin):
                     {
                         'fields': ('hero_image', 'hero_image_alt', 'hero_caption'),
                         'description': ABOUT_HERO_HELP_TEXT,
+                    },
+                ),
+            )
+            fieldsets.append(
+                (
+                    'Ключові показники',
+                    {
+                        'fields': ('metrics',),
+                        'description': (
+                            'Цифри блоку на /pro-nas/ (анімація лічильника). '
+                            'Додавайте / видаляйте рядки; суфікс — наприклад % або +.'
+                        ),
                     },
                 ),
             )

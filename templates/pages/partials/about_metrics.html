@@ -1,0 +1,14 @@
+{% if metrics %}
+<div class="about-stats" id="about-metrics" data-reveal aria-label="Ключові показники">
+  {% for item in metrics %}
+  <div class="about-stat">
+    <span
+      class="about-stat__value"
+      data-count="{{ item.value }}"
+      data-suffix="{{ item.suffix }}"
+    >0{{ item.suffix }}</span>
+    <span class="about-stat__label">{{ item.label }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
