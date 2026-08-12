@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{% block title %}{{ seo_title|default:page_title|default:"Діденко" }}{% endblock %} | Діденко</title>
+  <title>{% block title %}{% firstof seo_title page_title "Діденко" %}{% endblock %} | Діденко</title>
   {% if seo_description %}<meta name="description" content="{{ seo_description }}">{% endif %}
-  <meta property="og:title" content="{{ seo_title|default:page_title|default:"Діденко" }}">
+  <meta property="og:title" content="{% firstof seo_title page_title "Діденко" %}">
   {% if seo_description %}<meta property="og:description" content="{{ seo_description }}">{% endif %}
   {% if favicon_urls.is_custom %}
   <link rel="icon" href="{{ favicon_urls.icon }}" type="image/png" sizes="any">
