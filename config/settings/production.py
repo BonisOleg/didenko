@@ -32,12 +32,15 @@ CSRF_TRUSTED_ORIGINS = config(
     cast=Csv(),
 )
 
+# StaticFilesStorage (не Manifest): vendor bootstrap без .map ламає
+# ManifestStaticFilesStorage на collectstatic → web не стартує → nginx 502.
+# Cache-bust на проді дає nginx expires; hashed names не потрібні.
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
     },
 }
 
