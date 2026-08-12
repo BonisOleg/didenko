@@ -42,7 +42,10 @@ class LeadForm(forms.ModelForm):
                 },
             ),
             'consent': forms.CheckboxInput(
-                attrs={'class': 'form-check-input custom-checkbox__input'},
+                attrs={
+                    'class': 'form-check-input custom-checkbox__input',
+                    'required': True,
+                },
             ),
             'service': forms.HiddenInput(),
             'selected_topics': forms.HiddenInput(
@@ -59,8 +62,6 @@ class LeadForm(forms.ModelForm):
         self.fields['service'].queryset = Service.objects.filter(is_published=True)
         if not self.is_bound and not self.initial.get('phone'):
             self.fields['phone'].initial = '+380'
-        if not self.is_bound and self.initial.get('consent') is None:
-            self.fields['consent'].initial = True
         if not self.is_bound and self.initial.get('selected_topics') is None:
             self.fields['selected_topics'].initial = []
 
