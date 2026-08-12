@@ -1,0 +1,11 @@
+# Авто-merge лише для `docker compose up` без -f (локально).
+# На Droplet завжди: docker compose -f docker-compose.yml -f docker-compose.prod.yml
+# (override тоді не підхоплюється).
+services:
+  db:
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  web:
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.develop

@@ -2,15 +2,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import TemplateView
 
+from src.core.views import healthz
 from src.pages.admin_theme import theme_css
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
     path('theme.css', theme_css, name='theme_css'),
-    path('healthz/', TemplateView.as_view(template_name='seo/healthz.txt'), name='healthz'),
+    path('healthz/', healthz, name='healthz'),
     path('', include('src.seo.urls')),
     path('', include('src.leads.urls')),
     path('', include('src.services.urls')),

@@ -1,0 +1,19 @@
+services:
+  db:
+    restart: unless-stopped
+
+  web:
+    restart: unless-stopped
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.docker
+
+  nginx:
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      web:
+        condition: service_started

@@ -8,6 +8,7 @@ staticfiles/
 media/*
 !media/.gitkeep
 .DS_Store
+deploy/nginx/docker.prod.runtime.conf
 *.egg-info/
 dist/
 build/

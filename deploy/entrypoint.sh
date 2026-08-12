@@ -24,8 +24,16 @@ else:
     sys.exit(1)
 PY
 
-echo "==> Django migrate + collectstatic"
+echo "==> Django check + migrate + collectstatic"
+python manage.py check --deploy
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
+
+_static_root="${STATIC_ROOT:-/app/staticfiles}"
+_static_count=$(find "${_static_root}" -type f 2>/dev/null | wc -l | tr -d ' ')
+echo "==> static files: ${_static_count}"
+if [ "${_static_count:-0}" -lt 10 ]; then
+  echo "WARN: staticfiles count low — перевір STATIC_ROOT і collectstatic"
+fi
 
 exec "$@"
