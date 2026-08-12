@@ -5,6 +5,7 @@ from django.utils import timezone
 from src.blog.models import Category, Post
 from src.core.management.seed_about_body import ABOUT_BODY
 from src.core.management.seed_about_hero import seed_pro_nas_hero_image
+from src.core.management.seed_demo_images import seed_demo_images
 from src.pages.about_metrics import DEFAULT_ABOUT_METRICS
 from src.core.management.seed_services_data import SERVICES
 from src.pages.models import HomeBlock, HomeHero, Page, SiteSettings
@@ -268,6 +269,9 @@ class Command(BaseCommand):
                     'seo_description': item['excerpt'][:160],
                 },
             )
+
+        for line in seed_demo_images():
+            self.stdout.write(f'images: {line}')
 
         blocks = [
             (

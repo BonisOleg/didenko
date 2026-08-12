@@ -81,6 +81,31 @@ class Post(SeoFieldsMixin, TimeStampedModel):
         return reverse('blog:detail', kwargs={'slug': self.slug})
 
     @property
+    def cover_url(self) -> str:
+        """URL обкладинки: media, інакше static/img/blog/{slug}.webp."""
+        from pathlib import Path
+
+        from django.conf import settings
+        from django.templatetags.static import static
+
+        if self.cover_image:
+            try:
+                if Path(self.cover_image.path).is_file():
+                    return self.cover_image.url
+            except (NotImplementedError, ValueError, OSError):
+                return self.cover_image.url
+
+        static_rel = f'img/blog/{self.slug}.webp'
+        static_path = Path(settings.BASE_DIR) / 'static' / static_rel
+        if static_path.is_file():
+            return static(static_rel)
+        # Після collectstatic у контейнері джерело може бути лише в STATIC_ROOT
+        collected = Path(settings.STATIC_ROOT) / static_rel
+        if collected.is_file():
+            return static(static_rel)
+        return ''
+
+    @property
     def read_time_minutes(self) -> int:
         from django.utils.html import strip_tags
 

@@ -1,5 +1,7 @@
 """Хелпери читання SiteBlock для шаблонів і views."""
 
+from pathlib import Path
+
 
 def get_block_text(page: str, key: str, site_blocks=None, fallback: str = '') -> str:
     if site_blocks is None:
@@ -25,12 +27,19 @@ def get_block_image_url(
     site_blocks=None,
     fallback_static: str = '',
 ) -> str:
+    """URL зображення SiteBlock; якщо файл у media відсутній — static fallback."""
     from django.templatetags.static import static
 
     if site_blocks is not None:
         block = site_blocks.get(f'{page}.{key}')
         if block is not None and block.image:
-            return block.image.url
+            try:
+                disk = Path(block.image.path)
+                if disk.is_file():
+                    return block.image.url
+            except (NotImplementedError, ValueError, OSError):
+                # Не локальний storage або порожнє імʼя — віддаємо URL як є.
+                return block.image.url
     if fallback_static:
         return static(fallback_static)
     return ''

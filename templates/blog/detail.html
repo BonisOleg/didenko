@@ -41,9 +41,9 @@
       </div>
 
       <figure class="case-header__visual">
-        {% if post.cover_image %}
+        {% if post.cover_url %}
           <img
-            src="{{ post.cover_image.url }}"
+            src="{{ post.cover_url }}"
             alt="{{ post.cover_alt|default:post.title }}"
             loading="eager"
             width="960"

@@ -25,9 +25,9 @@
       </a>
     </div>
     <div class="post-card__featured-visual" aria-hidden="true">
-      {% if featured_post.cover_image %}
+      {% if featured_post.cover_url %}
         <img
-          src="{{ featured_post.cover_image.url }}"
+          src="{{ featured_post.cover_url }}"
           alt="{{ featured_post.cover_alt|default:'' }}"
           loading="lazy"
           width="720"

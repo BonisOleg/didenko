@@ -4,8 +4,8 @@
   <article class="blog-card" data-reveal data-reveal-delay="{{ forloop.counter0 }}">
     <a class="blog-card__link" href="{{ post.get_absolute_url }}">
       <div class="blog-card__visual" aria-hidden="true">
-        {% if post.cover_image %}
-          <img src="{{ post.cover_image.url }}" alt="" loading="lazy" width="640" height="360">
+        {% if post.cover_url %}
+          <img src="{{ post.cover_url }}" alt="" loading="lazy" width="640" height="360">
         {% else %}
           <div class="blog-card__placeholder">
             <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
