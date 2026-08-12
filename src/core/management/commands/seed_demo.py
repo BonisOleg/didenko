@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from src.blog.models import Category, Post
 from src.core.management.seed_about_body import ABOUT_BODY
+from src.core.management.seed_about_hero import seed_pro_nas_hero_image
 from src.pages.about_metrics import DEFAULT_ABOUT_METRICS
 from src.core.management.seed_services_data import SERVICES
 from src.pages.models import HomeBlock, HomeHero, Page, SiteSettings
@@ -106,6 +107,9 @@ class Command(BaseCommand):
             if slug == 'pro-nas':
                 defaults['metrics'] = list(DEFAULT_ABOUT_METRICS)
             Page.objects.update_or_create(slug=slug, defaults=defaults)
+
+        about_hero_status = seed_pro_nas_hero_image()
+        self.stdout.write(f'about hero: {about_hero_status}')
 
         for i, item in enumerate(SERVICES, start=1):
             Service.objects.update_or_create(
