@@ -3,6 +3,7 @@
 from pathlib import Path
 from urllib.parse import urlparse
 
+from csp.constants import NONCE
 from decouple import Csv, config
 from django.urls import reverse_lazy
 
@@ -111,7 +112,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {
         'default-src': ("'self'",),
-        'script-src': ("'self'",),
+        'script-src': (
+            "'self'",
+            NONCE,
+            'https://www.googletagmanager.com',
+            'https://www.googleadservices.com',
+            'https://www.google.com',
+            'https://googleads.g.doubleclick.net',
+        ),
         'style-src': (
             "'self'",
             'https://cdn.jsdelivr.net',
@@ -122,8 +130,28 @@ CONTENT_SECURITY_POLICY = {
         'style-src-attr': ("'unsafe-inline'",),
         'img-src': ("'self'", 'data:', 'blob:', 'https:'),
         'font-src': ("'self'", 'https://cdn.jsdelivr.net', 'https://fonts.gstatic.com'),
-        'connect-src': ("'self'",),
-        'frame-src': ("'self'", 'https://www.google.com', 'https://maps.google.com'),
+        'connect-src': (
+            "'self'",
+            'https://www.googletagmanager.com',
+            'https://www.google-analytics.com',
+            'https://analytics.google.com',
+            'https://www.google.com',
+            'https://www.google.com.ua',
+            'https://google.com',
+            'https://www.googleadservices.com',
+            'https://pagead2.googlesyndication.com',
+            'https://googleads.g.doubleclick.net',
+            'https://stats.g.doubleclick.net',
+        ),
+        'frame-src': (
+            "'self'",
+            'https://www.google.com',
+            'https://maps.google.com',
+            'https://www.googletagmanager.com',
+            'https://td.doubleclick.net',
+            'https://bid.g.doubleclick.net',
+            'https://www.googleadservices.com',
+        ),
         'frame-ancestors': ("'none'",),
         'base-uri': ("'self'",),
         'form-action': ("'self'",),
@@ -158,6 +186,7 @@ TELEGRAM_CHAT_ID = config('TELEGRAM_CHAT_ID', default='')
 CRM_WEBHOOK_URL = config('CRM_WEBHOOK_URL', default='')
 CRM_API_KEY = config('CRM_API_KEY', default='')
 GTM_CONTAINER_ID = config('GTM_CONTAINER_ID', default='')
+GOOGLE_TAG_ID = config('GOOGLE_TAG_ID', default='')
 GA4_MEASUREMENT_ID = config('GA4_MEASUREMENT_ID', default='')
 
 SITE_BLOCKS_CACHE_KEY = 'didenko_site_blocks_v1'

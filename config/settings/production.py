@@ -50,3 +50,7 @@ EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+
+# Public tag IDs: empty .env on prod still loads tracking.
+GTM_CONTAINER_ID = config('GTM_CONTAINER_ID', default='GTM-WVJDC8DM') or 'GTM-WVJDC8DM'
+GOOGLE_TAG_ID = config('GOOGLE_TAG_ID', default='AW-18394859385') or 'AW-18394859385'

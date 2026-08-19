@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  {% include "partials/analytics_head.html" %}
   <title>{% block title %}{% firstof seo_title page_title "Діденко" %}{% endblock %} | Діденко</title>
   {% if seo_description %}<meta name="description" content="{{ seo_description }}">{% endif %}
   <meta property="og:title" content="{% firstof seo_title page_title "Діденко" %}">
@@ -36,6 +37,7 @@
   {% block extra_css %}{% endblock %}
 </head>
 <body{% if site_settings %} data-body-font="{{ site_settings.body_font }}"{% endif %}>
+  {% include "partials/analytics_body.html" %}
   {% include "partials/header.html" %}
   <main id="main">
     {% block content %}{% endblock %}
