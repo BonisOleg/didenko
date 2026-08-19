@@ -140,8 +140,11 @@ CONTENT_SECURITY_POLICY = {
             'https://google.com',
             'https://www.googleadservices.com',
             'https://pagead2.googlesyndication.com',
+            'https://*.googlesyndication.com',
             'https://googleads.g.doubleclick.net',
             'https://stats.g.doubleclick.net',
+            'https://ad.doubleclick.net',
+            'https://*.doubleclick.net',
         ),
         'frame-src': (
             "'self'",
